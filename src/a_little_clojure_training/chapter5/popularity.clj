@@ -11,6 +11,14 @@
 (defn popularity_reduce [l]
   (reduce (fn [pop l] (+ l (/ pop 2))) 0 l))
 
+(defn popularity_remainder [l]
+  (loop [remaining l
+         pop 0]
+    (if (empty? remaining)
+      pop
+      (recur (rest remaining)
+             (+ (first remaining) (/ pop 2))))))
+
 (popularity l)
 
 ; sanity
@@ -20,4 +28,7 @@
 (= 15 (popularity_reduce [10 10]))
 (= 45 (popularity_reduce [20 20 30]))
 
-(= (popularity l) (popularity_reduce l))
+(= 15 (popularity_remainder [10 10]))
+(= 45 (popularity_remainder [20 20 30]))
+
+(= (popularity l) (popularity_reduce l) (popularity_remainder l))
