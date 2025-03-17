@@ -7,13 +7,22 @@
 (= [1 2] (move [0 0] [1 2]))
 (= [4 6] (move [1 2] [3 4]))
 
-(defn calculate_position_vector [location accumulated_speed speeds]
-  (if (empty? speeds) [location accumulated_speed]
-                      (let [new_speed (mapv + accumulated_speed (first speeds))
-                            new_location (move location new_speed)]
-                        (recur new_location new_speed (rest speeds)))))
+(defn calculate_position_vector
+  ([speeds]
+   (calculate_position_vector [0 0] [0 0] speeds))
+
+  ([location speeds]
+   (calculate_position_vector location [0 0] speeds))
+
+  ([location accumulated_speed speeds]
+   (if (empty? speeds) [location accumulated_speed]
+                       (let [new_speed (mapv + accumulated_speed (first speeds))
+                             new_location (move location new_speed)]
+                         (recur new_location new_speed (rest speeds))))))
 
 
+(= [[0 0] [0 0]] (calculate_position_vector []))
+(= [[0 0] [0 0]] (calculate_position_vector [0 0] []))
 (= [[0 0] [0 0]] (calculate_position_vector [0 0] [0 0] []))
 (= [[1 1] [0 0]] (calculate_position_vector [1 1] [0 0] []))
 (= [[1 1] [1 1]] (calculate_position_vector [0 0] [0 0] [[1 1]]))
