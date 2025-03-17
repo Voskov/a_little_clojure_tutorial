@@ -8,6 +8,16 @@
   (= 1 (count l)) (first l)
   (< 1 (count l)) (+ (last l) (/ (popularity (butlast l)) 2))))
 
+(defn popularity_reduce [l]
+  (reduce (fn [pop l] (+ l (/ pop 2))) 0 l))
+
 (popularity l)
 
-(popularity [20 20 30])
+; sanity
+(= 15 (popularity [10 10]))
+(= 45 (popularity [20 20 30]))
+
+(= 15 (popularity_reduce [10 10]))
+(= 45 (popularity_reduce [20 20 30]))
+
+(= (popularity l) (popularity_reduce l))
