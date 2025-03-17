@@ -17,3 +17,14 @@
 (defn midway [a b] (/ (+ a b) 2))
 (def midway #(/ (+ %1 %2) 2))
 
+(= 6 (apply + [1 2 3]))
+(= 6 (reduce + [1 2 3]))
+
+(reduce midway [2 3])
+(= 5/2 (reduce midway [2 3]))
+
+(reduce midway [2 3 4])
+
+(reductions + [1 2 3 4 5 6 7 8 9])
+(reductions midway [1 2 3 4 5])
+
